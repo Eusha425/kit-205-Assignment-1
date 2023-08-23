@@ -1,5 +1,5 @@
 #pragma once
-
+//bst.h
 typedef char* String;
 
 /**
@@ -55,7 +55,7 @@ void insert_bst(BST* self, String n);
  * @param self Pointer to the binary search tree to delete from
  * @param n The data item to delete
  */
-void delete_bst(BST* self, int n);
+void delete_bst(BST* self, String n);
 
 /**
  * @brief Prints the data items of a binary search tree in ascending order

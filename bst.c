@@ -71,16 +71,18 @@ BSTNodePtr min_node(BSTNodePtr self) {
 }
 
 // recursive function to delete a value
-BSTNodePtr delete_bst_node(BSTNodePtr self, int n) {
+BSTNodePtr delete_bst_node(BSTNodePtr self, String n) {
 	if (self != NULL) {
-		if (n == self->data_item) { // found item 
+		int compareResult = strcmp(n, self->data_item);
+		if (compareResult == 0) { // found item
 			if (self->left != NULL && self->right != NULL) {
-				// two child case 
+				// two child case
 				BSTNodePtr successor = min_node(self->right);
-				self->data_item = successor->data_item;
-				self->right = delete_bst_node(self->right, self->data_item);
+				free(self->data_item);
+				self->data_item = strdup(successor->data_item);
+				self->right = delete_bst_node(self->right, successor->data_item);
 			}
-			else { // one or zero child case 
+			else { // one or zero child case
 				BSTNodePtr to_free = self;
 				if (self->left) {
 					self = self->left;
@@ -88,10 +90,11 @@ BSTNodePtr delete_bst_node(BSTNodePtr self, int n) {
 				else {
 					self = self->right;
 				}
+				free(to_free->data_item);
 				free(to_free);
 			}
 		}
-		else if (n < self->data_item) {
+		else if (compareResult < 0) {
 			self->left = delete_bst_node(self->left, n);
 		}
 		else {
@@ -101,8 +104,9 @@ BSTNodePtr delete_bst_node(BSTNodePtr self, int n) {
 	return self;
 }
 
+
 // delete a value from the tree
-void delete_bst(BST* self, int n) {
+void delete_bst(BST* self, String n) {
 	self->root = delete_bst_node(self->root, n);
 }
 
@@ -114,7 +118,7 @@ void print_in_order_bst_node(BSTNodePtr self) {
 	else {
 		printf("(");
 		print_in_order_bst_node(self->left);
-		printf(" %d ", self->data_item);
+		printf(" %s ", self->data_item);
 		print_in_order_bst_node(self->right);
 		printf(")");
 	}
