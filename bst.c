@@ -31,25 +31,30 @@ BSTNodePtr find_bst(BST* self, String n) {
 }
 
 // recursive function to insert a value
-BSTNodePtr insert_bst_node(BSTNodePtr self, String n) {
-	int data_size = strlen(n) + 1;
-
-	if (self == NULL) { /* found where to put it*/
+BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName) {
+	int data_size = strlen(playlistName) + 1;
+	if (self == NULL) {
 		self = malloc(sizeof * self);
+		// self->playlist_name = _strdup(playlistName); // Use _strdup here
 		BSTNodePtr new_node = malloc(sizeof * new_node);
 		new_node->data_item = malloc(sizeof * new_node->data_item * data_size);
-		strcpy(new_node->data_item, n);
+		strcpy(new_node->data_item, playlistName);
+
+
 		self->left = NULL;
 		self->right = NULL;
+		//self->song_list = new_list();
 	}
-	else if (n < self->data_item) {
-		self->left = insert_bst_node(self->left, n);
+	else if (strcmp(playlistName, self->data_item) <= 0) {
+		self->left = insert_bst_node(self->left, playlistName);
 	}
-	else if (n > self->data_item) {
-		self->right = insert_bst_node(self->right, n);
+	else if (strcmp(playlistName, self->data_item) > 0) {
+		self->right = insert_bst_node(self->right, playlistName);
 	}
 	return self;
 }
+
+
 
 // insert a value into the tree
 void insert_bst(BST* self, String n) {

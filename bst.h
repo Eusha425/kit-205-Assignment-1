@@ -39,7 +39,7 @@ BST new_bst();
  *
  * @return Pointer to the node with the given data item, or NULL if it is not found
  */
-BSTNodePtr find_bst(BST* self, int n);
+BSTNodePtr find_bst(BST* self, String n);
 
 /**
  * @brief Inserts a node with a given data item into a binary search tree
@@ -47,7 +47,7 @@ BSTNodePtr find_bst(BST* self, int n);
  * @param self Pointer to the binary search tree to insert into
  * @param n The data item to insert
  */
-void insert_bst(BST* self, int n);
+void insert_bst(BST* self, String n);
 
 /**
  * @brief Deletes a node with a given data item from a binary search tree
