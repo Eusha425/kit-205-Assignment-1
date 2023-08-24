@@ -11,7 +11,6 @@ BST new_bst() {
 	return temp;
 }
 
-
 // recursive function to find a value and return the containing node
 BSTNodePtr find_bst_node(BSTNodePtr self, String n) {
 	if (self == NULL || strcmp(n, self->data_item) == 0) { /* not present, or here */
@@ -36,10 +35,12 @@ BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName) {
 	if (self == NULL) {
 		self = malloc(sizeof * self);
 		// self->playlist_name = _strdup(playlistName); // Use _strdup here
+		/*
 		BSTNodePtr new_node = malloc(sizeof * new_node);
 		new_node->data_item = malloc(sizeof * new_node->data_item * data_size);
 		strcpy(new_node->data_item, playlistName);
-
+		*/
+		strcpy(*self->data_item, playlistName);
 
 		self->left = NULL;
 		self->right = NULL;
@@ -53,8 +54,6 @@ BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName) {
 	}
 	return self;
 }
-
-
 
 // insert a value into the tree
 void insert_bst(BST* self, String n) {
@@ -179,36 +178,3 @@ void destroy_bst(BST* self) {
 	self->root = NULL;
 }
 
-void bst_test() {
-	BST tree = new_bst();
-	int quit = 0;
-	int data;
-	while (quit == 0) {
-		printf("Enter some data: ");
-		scanf_s("%d", &data);
-		if (data != 0) {
-			insert_bst(&tree, data);
-		}
-		else {
-			quit = 1;
-		}
-	}/*
-	printf("Tree in order: \n");
-	print_in_order_bst(&tree);
-	printf("\nTree pre order: \n");
-	print_pre_order_bst(&tree);
-	printf("\nTree post order: \n");
-	print_post_order_bst(&tree);
-	printf("\nTree height: \n");
-	print_height_bst(&tree);
-	printf("\n");
-	*/
-	delete_bst(&tree, 9);
-	delete_bst(&tree, 11);
-	delete_bst(&tree, 6);
-	delete_bst(&tree, 12);
-	delete_bst(&tree, 10);
-	printf("\nTree pre order: \n");
-
-
-}
