@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "bst.h"   // Include your binary search tree implementation
 #pragma warning(disable:4996) // to suppress CRT SECURE NO WARNINGS
 //main.c
@@ -54,6 +53,12 @@ int main() {
             break;
 
             // Implement other cases here
+        case 2:
+            printf("Enter playlist name to delete: ");
+            scanf("%s", playlistBuffer);
+            delete_bst(&playlistTree, playlistBuffer);
+            //find_bst(&playlistTree, playlistBuffer);
+            break;
 
         case 3:
             printf("The tree in order: \n");

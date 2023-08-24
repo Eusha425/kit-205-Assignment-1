@@ -78,7 +78,8 @@ BSTNodePtr delete_bst_node(BSTNodePtr self, String n) {
 				// two child case
 				BSTNodePtr successor = min_node(self->right);
 				free(self->data_item);
-				self->data_item = strdup(successor->data_item);
+				strcpy(self->data_item, successor->data_item);
+				//self->data_item = strdup(successor->data_item);
 				self->right = delete_bst_node(self->right, successor->data_item);
 			}
 			else { // one or zero child case
@@ -102,7 +103,6 @@ BSTNodePtr delete_bst_node(BSTNodePtr self, String n) {
 	}
 	return self;
 }
-
 
 // delete a value from the tree
 void delete_bst(BST* self, String n) {
