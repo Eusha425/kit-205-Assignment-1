@@ -7,6 +7,10 @@
 //main.c
 
 int main() {
+
+    bst_test();
+
+    /*
     BST playlistTree = new_bst();
 
     int choice;
@@ -45,7 +49,7 @@ int main() {
             // Add song to the playlist's song list
             // BSTNodePtr playlistNode = find_bst(&playlistTree, playlistName);
             // insert_at_front(&playlistNode->song_list, songName);
-            */
+            
             break;
 
             // Implement other cases here
@@ -65,6 +69,7 @@ int main() {
         }
         
     } while (choice != 0);
+    */
 
     return 0;
 }
