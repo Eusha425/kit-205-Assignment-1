@@ -8,9 +8,9 @@
 
 int main() {
 
-    bst_test();
+    //bst_test();
 
-    /*
+    
     BST playlistTree = new_bst();
 
     int choice;
@@ -19,7 +19,7 @@ int main() {
 
 
     do {
-        printf("1. Add a song to a playlist\n");
+        printf("\n1. Add a song to a playlist\n");
         printf("2. Remove a song from a playlist\n");
         printf("3. Print songs in a playlist\n");
         printf("4. Count playlists that a song appears in\n");
@@ -45,6 +45,7 @@ int main() {
                 newPlaylist->song_list = new_list();
                 insert_bst(&playlistTree, newPlaylist);
             }
+            */
 
             // Add song to the playlist's song list
             // BSTNodePtr playlistNode = find_bst(&playlistTree, playlistName);
@@ -69,7 +70,7 @@ int main() {
         }
         
     } while (choice != 0);
-    */
+    
 
     return 0;
 }

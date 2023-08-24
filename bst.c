@@ -35,12 +35,12 @@ BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName) {
 	if (self == NULL) {
 		self = malloc(sizeof * self);
 		// self->playlist_name = _strdup(playlistName); // Use _strdup here
-		/*
+		
 		BSTNodePtr new_node = malloc(sizeof * new_node);
 		new_node->data_item = malloc(sizeof * new_node->data_item * data_size);
 		strcpy(new_node->data_item, playlistName);
-		*/
-		strcpy(*self->data_item, playlistName);
+		
+		self = new_node;
 
 		self->left = NULL;
 		self->right = NULL;
@@ -178,3 +178,36 @@ void destroy_bst(BST* self) {
 	self->root = NULL;
 }
 
+void bst_test() {
+	BST tree = new_bst();
+	
+	String data;
+	
+	printf("Enter some data: ");
+	scanf(" %s ", &data);
+	
+	insert_bst(&tree, data);
+	
+	/*
+	printf("Tree in order: \n");
+	print_in_order_bst(&tree);
+	printf("\nTree pre order: \n");
+	print_pre_order_bst(&tree);
+	printf("\nTree post order: \n");
+	print_post_order_bst(&tree);
+	printf("\nTree height: \n");
+	print_height_bst(&tree);
+	printf("\n");
+	*/
+	/*
+	delete_bst(&tree, 9);
+	delete_bst(&tree, 11);
+	delete_bst(&tree, 6);
+	delete_bst(&tree, 12);
+	delete_bst(&tree, 10);
+	*/
+	printf("\n Tree in order: \n");
+	print_in_order_bst(&tree);
+
+
+}
