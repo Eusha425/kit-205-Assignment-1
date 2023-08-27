@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "bst.h"
 #include <string.h>
+#include "list.h"
 #pragma warning(disable:4996) // to suppress CRT SECURE NO WARNINGS
 
 // create an empty bst
@@ -30,7 +31,7 @@ BSTNodePtr find_bst(BST* self, String n) {
 }
 
 // recursive function to insert a value
-BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName) {
+BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName, String song_name) {
 	int data_size = strlen(playlistName) + 1;
 	if (self == NULL) {
 		self = malloc(sizeof * self);
@@ -39,25 +40,31 @@ BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName) {
 		BSTNodePtr new_node = malloc(sizeof * new_node);
 		new_node->data_item = malloc(sizeof * new_node->data_item * data_size);
 		strcpy(new_node->data_item, playlistName);
-		
+		List list_song = new_list();
+		insert_at_front(&list_song, song_name);
+		new_node->song = list_song;
+
 		self = new_node;
 
 		self->left = NULL;
 		self->right = NULL;
 		//self->song_list = new_list();
 	}
-	else if (strcmp(playlistName, self->data_item) <= 0) {
-		self->left = insert_bst_node(self->left, playlistName);
+	else if (strcmp(playlistName, self->data_item) ==0){
+		insert_at_front(&self->song, song_name);
+	}
+	else if (strcmp(playlistName, self->data_item) < 0) {
+		self->left = insert_bst_node(self->left, playlistName, song_name);
 	}
 	else if (strcmp(playlistName, self->data_item) > 0) {
-		self->right = insert_bst_node(self->right, playlistName);
+		self->right = insert_bst_node(self->right, playlistName, song_name);
 	}
 	return self;
 }
 
 // insert a value into the tree
-void insert_bst(BST* self, String n) {
-	self->root = insert_bst_node(self->root, n);
+void insert_bst(BST* self, String n, String s) {
+	self->root = insert_bst_node(self->root, n, s);
 }
 
 // helper function for delete
@@ -128,6 +135,13 @@ void print_in_order_bst(BST* self) {
 	print_in_order_bst_node(self->root);
 }
 
+void print_song_playlist(BSTNodePtr self)
+{
+	
+	print_list(&(self->song));
+}
+
+
 
 int find_height_bst_node(BSTNodePtr self)
 {
@@ -178,6 +192,8 @@ void destroy_bst(BST* self) {
 	self->root = NULL;
 }
 
+
+
 void bst_test() {
 	BST tree = new_bst();
 	
@@ -186,7 +202,7 @@ void bst_test() {
 	printf("Enter some data: ");
 	scanf(" %s ", &data);
 	
-	insert_bst(&tree, data);
+	//insert_bst(&tree, data);
 	
 	/*
 	printf("Tree in order: \n");

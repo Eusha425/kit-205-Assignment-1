@@ -2,8 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bst.h"   // Include your binary search tree implementation
+//#include "list.h"
 #pragma warning(disable:4996) // to suppress CRT SECURE NO WARNINGS
 //main.c
+
+void print_song_list(BST* self, String playlist)
+{
+    BSTNodePtr list = find_bst(self, playlist);
+    print_song_playlist(list);
+    
+}
 
 int main() {
 
@@ -29,9 +37,9 @@ int main() {
         case 1:
             printf("Enter playlist name: ");
             scanf("%s", playlistBuffer);
-            //printf("Enter song name: ");
-            //scanf("%s", songBuffer);
-            insert_bst(&playlistTree, playlistBuffer);
+            printf("Enter song name: ");
+            scanf("%s", songBuffer);
+            insert_bst(&playlistTree, playlistBuffer, songBuffer);
 
             // Check if playlist already exists in the tree
             /*
@@ -61,8 +69,16 @@ int main() {
             break;
 
         case 3:
-            printf("The tree in order: \n");
-            print_in_order_bst(&playlistTree);
+            
+            printf("The tree in order:");
+
+            scanf("%s", &playlistBuffer);
+
+
+            
+            //print_in_order_bst(&playlistTree);
+            print_song_list(&playlistTree, playlistBuffer);
+
             break;
         case 0:
             // Clean up and exit

@@ -1,7 +1,7 @@
 #pragma once
 //bst.h
 typedef char* String;
-
+#include "list.h"
 /**
  * @struct bstNode
  * @brief Represents a single node in a binary search tree
@@ -10,6 +10,7 @@ typedef char* String;
  */
 typedef struct bstNode {
     String data_item;
+    List song;
     struct bstNode* left;
     struct bstNode* right;
 } *BSTNodePtr;
@@ -41,13 +42,15 @@ BST new_bst();
  */
 BSTNodePtr find_bst(BST* self, String n);
 
+void print_song_playlist(BSTNodePtr self);
+
 /**
  * @brief Inserts a node with a given data item into a binary search tree
  *
  * @param self Pointer to the binary search tree to insert into
  * @param n The data item to insert
  */
-void insert_bst(BST* self, String n);
+void insert_bst(BST* self, String n, String s);
 
 /**
  * @brief Deletes a node with a given data item from a binary search tree
