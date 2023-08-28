@@ -42,7 +42,9 @@ BST new_bst();
  */
 BSTNodePtr find_bst(BST* self, String n);
 
-void print_song_playlist(BSTNodePtr self);
+
+
+// void test_playlist(BSTNodePtr self, String playlist_name);
 
 /**
  * @brief Inserts a node with a given data item into a binary search tree

@@ -41,7 +41,8 @@ BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName, String song_nam
 		new_node->data_item = malloc(sizeof * new_node->data_item * data_size);
 		strcpy(new_node->data_item, playlistName);
 		List list_song = new_list();
-		insert_at_front(&list_song, song_name);
+		// insert_at_front(&list_song, song_name);
+		insert_in_order(&list_song, song_name);
 		new_node->song = list_song;
 
 		self = new_node;
@@ -51,7 +52,8 @@ BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName, String song_nam
 		//self->song_list = new_list();
 	}
 	else if (strcmp(playlistName, self->data_item) ==0){
-		insert_at_front(&self->song, song_name);
+		// insert_at_front(&self->song, song_name);
+		insert_in_order(&self->song, song_name);
 	}
 	else if (strcmp(playlistName, self->data_item) < 0) {
 		self->left = insert_bst_node(self->left, playlistName, song_name);
@@ -135,13 +137,14 @@ void print_in_order_bst(BST* self) {
 	print_in_order_bst_node(self->root);
 }
 
-void print_song_playlist(BSTNodePtr self)
+
+/*
+void test_playlist(BSTNodePtr self, String playlist_name)
 {
-	
-	print_list(&(self->song));
+	BSTNodePtr find_playlist = find_bst(self, playlist_name);
+	print_list(&(find_playlist));
 }
-
-
+*/
 
 int find_height_bst_node(BSTNodePtr self)
 {

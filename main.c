@@ -6,12 +6,7 @@
 #pragma warning(disable:4996) // to suppress CRT SECURE NO WARNINGS
 //main.c
 
-void print_song_list(BST* self, String playlist)
-{
-    BSTNodePtr list = find_bst(self, playlist);
-    print_song_playlist(list);
-    
-}
+
 
 int main() {
 
@@ -40,49 +35,37 @@ int main() {
             printf("Enter song name: ");
             scanf("%s", songBuffer);
             insert_bst(&playlistTree, playlistBuffer, songBuffer);
-
-            // Check if playlist already exists in the tree
-            /*
-            BSTNodePtr existingPlaylist = find_bst(&playlistTree, playlistName);
-            if (existingPlaylist == NULL) {
-                // Create new playlist node
-                BSTNodePtr newPlaylist = malloc(sizeof*newPlaylist);
-                newPlaylist->playlist_name = strdup(playlistName);
-                newPlaylist->left = newPlaylist->right = NULL;
-                newPlaylist->song_list = new_list();
-                insert_bst(&playlistTree, newPlaylist);
-            }
-            */
-
-            // Add song to the playlist's song list
-            // BSTNodePtr playlistNode = find_bst(&playlistTree, playlistName);
-            // insert_at_front(&playlistNode->song_list, songName);
             
             break;
-
-            // Implement other cases here
         case 2:
-            printf("Enter playlist name to delete: ");
+            
+            printf("Enter playlist name: ");
             scanf("%s", playlistBuffer);
-            delete_bst(&playlistTree, playlistBuffer);
-            //find_bst(&playlistTree, playlistBuffer);
+            printf("Enter song name: ");
+            scanf("%s", songBuffer);
+            BSTNodePtr find_song_playlist = find_bst(&playlistTree, playlistBuffer);
+            delete_from_list(&find_song_playlist->song, songBuffer);
+            
+            // delete_bst(&playlistTree, playlistBuffer);
+            
+            
+
             break;
 
         case 3:
             
-            printf("The tree in order:");
-
+            printf("Enter the playlist name:");
             scanf("%s", &playlistBuffer);
 
-
-            
-            //print_in_order_bst(&playlistTree);
-            print_song_list(&playlistTree, playlistBuffer);
+            // find the playlist, from user input name
+            BSTNodePtr find_playlist = find_bst(&playlistTree, playlistBuffer);
+            print_list(&(find_playlist->song));
 
             break;
         case 0:
+
             // Clean up and exit
-            // destroy_bst(&playlistTree);
+            destroy_bst(&playlistTree);
             printf("\nExiting...\n");
             break;
 

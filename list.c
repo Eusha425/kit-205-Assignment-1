@@ -5,7 +5,7 @@
 #include <string.h>
 #pragma warning(disable:4996) // to suppress CRT SECURE NO WARNINGS
 
-//TODO: change data type to char*
+
 
 List new_list() {
 	List temp;
@@ -39,6 +39,31 @@ void insert_at_front(List* self, String data) {
 	strcpy(new_node->data, data);
 	new_node->next = self->head;
 	self->head = new_node;
+}
+
+// Function to insert a new node with given data in the list in ascending order.
+void insert_in_order(List* self, String data) {
+	ListNodePtr current = self->head;
+	ListNodePtr prev = NULL;
+
+	ListNodePtr new_node = malloc(sizeof * new_node);
+	new_node->data = malloc(strlen(data) + 1);  // Allocate memory for the string data
+	strcpy(new_node->data, data);
+	new_node->next = NULL;
+
+	while (current != NULL && strcmp(current->data, data) < 0) {
+		prev = current;
+		current = current->next;
+	}
+
+	if (current == self->head) { // at front
+		new_node->next = current;
+		self->head = new_node;
+	}
+	else {                     // middle
+		new_node->next = current;
+		prev->next = new_node;
+	}
 }
 
 // after changing to char*:
