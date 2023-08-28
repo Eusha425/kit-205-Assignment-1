@@ -13,33 +13,33 @@ BST new_bst() {
 }
 
 // recursive function to find a value and return the containing node
-BSTNodePtr find_bst_node(BSTNodePtr self, String n) {
-	if (self == NULL || strcmp(n, self->data_item) == 0) { /* not present, or here */
+BSTNodePtr find_bst_node(BSTNodePtr self, String data) {
+	if (self == NULL || strcmp(data, self->data_item) == 0) { /* not present, or here */
 		return self;
 	}
-	else if (strcmp(n , self->data_item) < 0) {
-		return find_bst_node(self->left, n);
+	else if (strcmp(data , self->data_item) < 0) {
+		return find_bst_node(self->left, data);
 	}
 	else {
-		return find_bst_node(self->right, n);
+		return find_bst_node(self->right, data);
 	}
 }
 
 // find a value in the tree and return the node
-BSTNodePtr find_bst(BST* self, String n) {
-	return find_bst_node(self->root, n);
+BSTNodePtr find_bst(BST* self, String data) {
+	return find_bst_node(self->root, data);
 }
 
 // recursive function to insert a value
-BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName, String song_name) {
-	int data_size = strlen(playlistName) + 1;
+BSTNodePtr insert_bst_node(BSTNodePtr self, String playlist_name, String song_name) {
+	int data_size = strlen(playlist_name) + 1;
 	if (self == NULL) {
 		self = malloc(sizeof * self);
 		// self->playlist_name = _strdup(playlistName); // Use _strdup here
 		
 		BSTNodePtr new_node = malloc(sizeof * new_node);
 		new_node->data_item = malloc(sizeof * new_node->data_item * data_size);
-		strcpy(new_node->data_item, playlistName);
+		strcpy(new_node->data_item, playlist_name);
 		List list_song = new_list();
 		// insert_at_front(&list_song, song_name);
 		insert_in_order(&list_song, song_name);
@@ -51,22 +51,22 @@ BSTNodePtr insert_bst_node(BSTNodePtr self, String playlistName, String song_nam
 		self->right = NULL;
 		//self->song_list = new_list();
 	}
-	else if (strcmp(playlistName, self->data_item) ==0){
+	else if (strcmp(playlist_name, self->data_item) ==0){
 		// insert_at_front(&self->song, song_name);
 		insert_in_order(&self->song, song_name);
 	}
-	else if (strcmp(playlistName, self->data_item) < 0) {
-		self->left = insert_bst_node(self->left, playlistName, song_name);
+	else if (strcmp(playlist_name, self->data_item) < 0) {
+		self->left = insert_bst_node(self->left, playlist_name, song_name);
 	}
-	else if (strcmp(playlistName, self->data_item) > 0) {
-		self->right = insert_bst_node(self->right, playlistName, song_name);
+	else if (strcmp(playlist_name, self->data_item) > 0) {
+		self->right = insert_bst_node(self->right, playlist_name, song_name);
 	}
 	return self;
 }
 
 // insert a value into the tree
-void insert_bst(BST* self, String n, String s) {
-	self->root = insert_bst_node(self->root, n, s);
+void insert_bst(BST* self, String playlist, String song) {
+	self->root = insert_bst_node(self->root, playlist, song);
 }
 
 // helper function for delete
@@ -79,9 +79,9 @@ BSTNodePtr min_node(BSTNodePtr self) {
 }
 
 // recursive function to delete a value
-BSTNodePtr delete_bst_node(BSTNodePtr self, String n) {
+BSTNodePtr delete_bst_node(BSTNodePtr self, String data) {
 	if (self != NULL) {
-		int compareResult = strcmp(n, self->data_item);
+		int compareResult = strcmp(data, self->data_item);
 		if (compareResult == 0) { // found item
 			if (self->left != NULL && self->right != NULL) {
 				// two child case
@@ -104,18 +104,18 @@ BSTNodePtr delete_bst_node(BSTNodePtr self, String n) {
 			}
 		}
 		else if (compareResult < 0) {
-			self->left = delete_bst_node(self->left, n);
+			self->left = delete_bst_node(self->left, data);
 		}
 		else {
-			self->right = delete_bst_node(self->right, n);
+			self->right = delete_bst_node(self->right, data);
 		}
 	}
 	return self;
 }
 
 // delete a value from the tree
-void delete_bst(BST* self, String n) {
-	self->root = delete_bst_node(self->root, n);
+void delete_bst(BST* self, String data) {
+	self->root = delete_bst_node(self->root, data);
 }
 
 // recursive function to print in order

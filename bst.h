@@ -40,7 +40,7 @@ BST new_bst();
  *
  * @return Pointer to the node with the given data item, or NULL if it is not found
  */
-BSTNodePtr find_bst(BST* self, String n);
+BSTNodePtr find_bst(BST* self, String playlist);
 
 
 
@@ -52,7 +52,7 @@ BSTNodePtr find_bst(BST* self, String n);
  * @param self Pointer to the binary search tree to insert into
  * @param n The data item to insert
  */
-void insert_bst(BST* self, String n, String s);
+void insert_bst(BST* self, String playlist, String song);
 
 /**
  * @brief Deletes a node with a given data item from a binary search tree
@@ -60,7 +60,7 @@ void insert_bst(BST* self, String n, String s);
  * @param self Pointer to the binary search tree to delete from
  * @param n The data item to delete
  */
-void delete_bst(BST* self, String n);
+void delete_bst(BST* self, String playlist);
 
 /**
  * @brief Prints the data items of a binary search tree in ascending order
