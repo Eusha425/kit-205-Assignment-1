@@ -46,10 +46,6 @@ int main() {
             BSTNodePtr find_song_playlist = find_bst(&playlistTree, playlistBuffer);
             delete_from_list(&find_song_playlist->song, songBuffer);
             
-            // delete_bst(&playlistTree, playlistBuffer);
-            
-            
-
             break;
 
         case 3:
