@@ -57,6 +57,17 @@ int main() {
             print_list(&(find_playlist->song));
 
             break;
+
+        case 4:
+            printf("Enter song name: ");
+            scanf("%s", song_buffer);
+            int playlistCount = count_playlists_with_song(playlist_tree.root, song_buffer);
+
+            printf("The song '%s' appears in %d playlists.\n", song_buffer, playlistCount);
+
+            break;
+
+
         case 0:
 
             // Clean up and exit

@@ -1,3 +1,4 @@
+// bst.c
 #include <stdlib.h>
 #include <stdio.h>
 #include "bst.h"
@@ -195,6 +196,19 @@ void destroy_bst(BST* self) {
 	self->root = NULL;
 }
 
+// Count the number of playlists that a song appears in
+int count_playlists_with_song(BSTNodePtr root, String song_name) {
+	if (root == NULL) {
+		return 0;
+	}
+
+	int count = count_occurrences(&(root->song), song_name);
+
+	int left_count = count_playlists_with_song(root->left, song_name);
+	int right_count = count_playlists_with_song(root->right, song_name);
+
+	return count + left_count + right_count;
+}
 
 
 void bst_test() {

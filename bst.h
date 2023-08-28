@@ -90,4 +90,7 @@ void print_in_order_bst(BST* self);
  */
 void destroy_bst(BST* self);
 
+int count_playlists_with_song(BSTNodePtr root, String song_name);
+int count_occurrences(List* list, String song_name);
+
 void bst_test();

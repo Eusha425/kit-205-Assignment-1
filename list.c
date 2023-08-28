@@ -1,4 +1,4 @@
-// list_wk5.c
+// list.c
 #include <stdio.h>
 #include <stdlib.h>
 #include "list.h"
@@ -94,6 +94,20 @@ void delete_from_list(List* self, String data) {
 		}
 	}
 }
+
+// Count the occurrences of a song in a linked list
+int count_occurrences(List* list, String song_name) {
+	int count = 0;
+	ListNodePtr current = list->head;
+	while (current != NULL) {
+		if (strcmp(current->data, song_name) == 0) {
+			count++;
+		}
+		current = current->next;
+	}
+	return count;
+}
+
 
 // after changing to char*:
 // -- need to free memory allocated for string before freeing node
