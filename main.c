@@ -2,10 +2,41 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bst.h"   // Include your binary search tree implementation
-//#include "list.h"
+
 #pragma warning(disable:4996) // to suppress CRT SECURE NO WARNINGS
 //main.c
 
+
+// Function to find the most similar playlist
+void find_most_similar_playlist(BST* playlist_tree, String target_playlist) {
+    BSTNodePtr target_node = find_bst(playlist_tree, target_playlist);
+    if (target_node == NULL) {
+        printf("Playlist '%s' not found.\n", target_playlist);
+        return;
+    }
+
+    double max_similarity = -1.0;
+    String most_similar_playlist = NULL;
+
+    BSTNodePtr current_node = playlist_tree->root;
+    while (current_node != NULL) {
+        if (strcmp(current_node->data_item, target_playlist) != 0) {
+            double similarity = calculate_jaccard_similarity(&(current_node->song), &(target_node->song));
+            if (similarity > max_similarity) {
+                max_similarity = similarity;
+                most_similar_playlist = current_node->data_item;
+            }
+        }
+        current_node = (strcmp(target_playlist, current_node->data_item) < 0) ? current_node->left : current_node->right;
+    }
+
+    if (most_similar_playlist != NULL) {
+        printf("The most similar playlist to '%s' is '%s' with Jaccard similarity %.2lf\n", target_playlist, most_similar_playlist, max_similarity);
+    }
+    else {
+        printf("No similar playlists found for '%s'.\n", target_playlist);
+    }
+}
 
 
 int main() {
@@ -15,7 +46,7 @@ int main() {
     int choice;
     String playlist_buffer[100]; // Initialize with memory for playlist name
     String song_buffer[100];     // Initialize with memory for song name
-
+    String target_playlist[100];
 
     do {
         printf("\n1. Add a song to a playlist\n");
@@ -57,16 +88,23 @@ int main() {
             print_list(&(find_playlist->song));
 
             break;
-
         case 4:
+
             printf("Enter song name: ");
             scanf("%s", song_buffer);
             int playlistCount = count_playlists_with_song(playlist_tree.root, song_buffer);
-
             printf("The song '%s' appears in %d playlists.\n", song_buffer, playlistCount);
-
+            
             break;
 
+        case 5:
+            // Find most similar playlist
+            
+            printf("Enter the playlist name for recommendations: ");
+            scanf("%s", target_playlist);
+
+            find_most_similar_playlist(&playlist_tree, target_playlist);
+            break;
 
         case 0:
 

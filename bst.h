@@ -93,4 +93,13 @@ void destroy_bst(BST* self);
 int count_playlists_with_song(BSTNodePtr root, String song_name);
 int count_occurrences(List* list, String song_name);
 
+/**
+ * @brief Calculates the Jaccard similarity between two playlists.
+ *
+ * @param playlist1 Pointer to the first playlist.
+ * @param playlist2 Pointer to the second playlist.
+ * @return The Jaccard similarity score between the playlists.
+ */
+double calculate_jaccard_similarity(List* playlist1, List* playlist2);
+
 void bst_test();

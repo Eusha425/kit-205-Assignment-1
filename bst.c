@@ -198,16 +198,38 @@ void destroy_bst(BST* self) {
 
 // Count the number of playlists that a song appears in
 int count_playlists_with_song(BSTNodePtr root, String song_name) {
-	if (root == NULL) {
-		return 0;
+    if (root == NULL) {
+        return 0;
+    }
+
+    int count = count_occurrences(&(root->song), song_name);
+
+    int left_count = count_playlists_with_song(root->left, song_name);
+    int right_count = count_playlists_with_song(root->right, song_name);
+
+    return count + left_count + right_count;
+}
+
+// Function to calculate Jaccard similarity between two playlists
+double calculate_jaccard_similarity(List* playlist1, List* playlist2) {
+	int intersection = 0;
+	int union_size = 0;
+
+	ListNodePtr current1 = playlist1->head;
+	while (current1 != NULL) {
+		ListNodePtr current2 = playlist2->head;
+		while (current2 != NULL) {
+			if (strcmp(current1->data, current2->data) == 0) {
+				intersection++;
+				break;
+			}
+			current2 = current2->next;
+		}
+		union_size++;
+		current1 = current1->next;
 	}
 
-	int count = count_occurrences(&(root->song), song_name);
-
-	int left_count = count_playlists_with_song(root->left, song_name);
-	int right_count = count_playlists_with_song(root->right, song_name);
-
-	return count + left_count + right_count;
+	return (double)intersection / union_size;
 }
 
 

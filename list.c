@@ -109,6 +109,7 @@ int count_occurrences(List* list, String song_name) {
 }
 
 
+
 // after changing to char*:
 // -- need to free memory allocated for string before freeing node
 void destroy_list(List* self) {
