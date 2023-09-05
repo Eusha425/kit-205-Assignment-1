@@ -24,12 +24,27 @@
     <ClCompile Include="list.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hashtable_wk5.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="list_wk5.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main_second.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bst.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hashtable_wk5.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="list_wk5.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
