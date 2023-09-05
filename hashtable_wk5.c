@@ -13,7 +13,7 @@ HashTable create_hashtable(int n) {
 
 	for (int i = 0; i < n; i++)
 	{
-		newtable.table[i] = new_list();
+		newtable.table[i] = new_list_hash();
 	}
 
 	return newtable;
@@ -35,29 +35,46 @@ double calculate_similarity(List* playlist1, List* playlist2) {
 	int intersection = 0;
 	int union_size = 0;
 
+	// Traverse both playlists and count the number of common songs
 	ListNodePtr current1 = playlist1->head;
-	while (current1 != NULL) {
-		ListNodePtr current2 = playlist2->head;
-		while (current2 != NULL) {
-			if (strcmp(current1->data, current2->data) == 0) {
-				intersection++;
-				break;
-			}
+	ListNodePtr current2 = playlist2->head;
+
+	while (current1 != NULL && current2 != NULL) {
+		int cmp = strcmp(current1->data, current2->data);
+
+		if (cmp < 0) {
+			current1 = current1->next;
+		}
+		else if (cmp > 0) {
+			current2 = current2->next;
+		}
+		else {
+			// Songs are the same in both playlists
+			intersection++;
+			current1 = current1->next;
 			current2 = current2->next;
 		}
 		union_size++;
-		current1 = current1->next;
 	}
 
-	return (double)intersection / union_size;
+	// Calculate Jaccard similarity (intersection over union)
+	if (union_size > 0) {
+		double similarity = (double)intersection / union_size;
+		return similarity;
+	}
+	else {
+		// Handle the case where one or both playlists are empty
+		return 0.0;
+	}
 }
+
 
 void hash_insert(HashTable* self, String playlist_name, String song_name) {
 	// 1. find the list to insert into using hash
 	int hash_index = hash(playlist_name, self->size);
 
 	// 2. call list function to insert into that list
-	insert_at_front(&(self->table[hash_index]), song_name);
+	insert_at_front_hash(&(self->table[hash_index]), playlist_name, song_name);
 }
 
 void hash_remove(HashTable* self, String playlist_name, String song_name) {
@@ -65,7 +82,8 @@ void hash_remove(HashTable* self, String playlist_name, String song_name) {
 	int hash_index = hash(playlist_name, self->size);
 
 	// 2. call list function to remove from that list
-	delete_from_list(&(self->table[hash_index]), song_name);
+	delete_from_list_hash(&(self->table[hash_index]), song_name);
+
 }
 
 void hash_print(HashTable* self, String playlist_name) {
@@ -73,7 +91,7 @@ void hash_print(HashTable* self, String playlist_name) {
 	int hash_index = hash(playlist_name, self->size);
 
 	// 2. call list function to print that list
-	print_list(&(self->table[hash_index]));
+	print_list_hash(&(self->table[hash_index]));
 }
 
 int hash_count(HashTable* self, String song_name) {
@@ -91,10 +109,6 @@ int hash_count(HashTable* self, String song_name) {
 	return count;
 }
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "hashtable_wk5.h"
 
 // Custom function to split a string by a delimiter and return the first part
 char* split_string(const char* str, char delimiter) {
@@ -174,7 +188,8 @@ char* hash_most_similar(HashTable* self, String playlist_name) {
 
 void hash_destroy(HashTable* self) {
 	for (int i = 0; i < self->size; i++) {
-		destroy_list(&(self->table[i]));
+		destroy_list_hash(&(self->table[i]));
+
 	}
 	free(self->table);
 	self->size = 0;

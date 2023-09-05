@@ -39,7 +39,7 @@ void find_most_similar_playlist(BST* playlist_tree, String target_playlist) {
 }
 
 
-int main() {
+int main1() {
 
     BST playlist_tree = new_bst();
 

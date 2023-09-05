@@ -14,12 +14,14 @@ typedef struct list {
     ListNodePtr head;
 } List;
 
-List new_list();
+List new_list_hash();
 
-void print_list(List* self);
+void print_list_hash(List* self);
 
-void insert_at_front(List* self, String data);
+void insert_at_front_hash(List* self, String playlist_name, String data);
 
-void delete_from_list(List* self, String data);
+// void insert_at_front(List* self, String data);
 
-void destroy_list(List* self);
+void delete_from_list_hash(List* self, String data);
+
+void destroy_list_hash(List* self);

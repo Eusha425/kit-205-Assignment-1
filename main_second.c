@@ -6,7 +6,7 @@
 
 
 // Find the most similar playlist for recommendations
-char* find_most_similar_playlist(HashTable* table, String target_playlist) {
+char* find_most_similar_playlist_hash(HashTable* table, String target_playlist) {
     double max_similarity = -1.0;
     char* most_similar = NULL;
 
@@ -17,16 +17,21 @@ char* find_most_similar_playlist(HashTable* table, String target_playlist) {
     for (int i = 0; i < table->size; i++) {
         if (i != target_index) {
             List* current_list = &(table->table[i]);
-            double similarity = calculate_similarity(target_list, current_list);
 
-            if (similarity > max_similarity) {
-                max_similarity = similarity;
-                most_similar = current_list->head->playlist_name;
+            // Check if the current list is empty before accessing its head
+            if (current_list->head != NULL) {
+                double similarity = calculate_similarity(target_list, current_list);
+
+                if (similarity > max_similarity) {
+                    max_similarity = similarity;
+                    most_similar = current_list->head->playlist_name;
+                }
             }
         }
     }
     return most_similar;
 }
+
 
 int main() {
     int command = 1;
@@ -82,7 +87,7 @@ int main() {
         {
             char playlist_name[100];
             scanf("%s", playlist_name);
-            char* most_similar = find_most_similar_playlist(&table, playlist_name);
+            char* most_similar = find_most_similar_playlist_hash(&table, playlist_name);
             printf("The most similar playlist to %s is %s.\n", playlist_name, most_similar);
             break;
         }

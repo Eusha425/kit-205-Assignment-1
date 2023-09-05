@@ -7,7 +7,7 @@
 
 //TODO: change data type to char*
 
-List new_list() {
+List new_list_hash() {
 	List temp;
 	temp.head = NULL;
 	return temp;
@@ -15,7 +15,7 @@ List new_list() {
 
 // after changing to char*:
 // -- need to change printf for string
-void print_list(List* self) {
+void print_list_hash(List* self) {
 	ListNodePtr current = self->head;
 	while (current != NULL) {
 		printf("%s", current->data);
@@ -27,37 +27,49 @@ void print_list(List* self) {
 	printf("\n");
 }
 
-// after changing to char*:
-// -- check how long data parameter is (strlen)
-// -- allocate just enough memory for newNode->data (malloc)
-// -- copy string from parameter into newNode->data (strcpy)
-void insert_at_front(List* self, String data) {
+// Insert a new node with data at the front of the list
+void insert_at_front_hash(List* self, String playlist_name, String data) {
+	ListNodePtr new_node = malloc(sizeof(struct listNode));
 
-	int data_size = strlen(data) + 1;
-	ListNodePtr new_node = malloc(sizeof * new_node);
-	new_node->data = malloc(sizeof new_node->data * data_size);
+	if (new_node == NULL) {
+		fprintf(stderr, "Memory allocation failed\n");
+		exit(1);
+	}
+
+	// Allocate memory for playlist_name and data
+	new_node->playlist_name = malloc(strlen(playlist_name) + 1);
+	new_node->data = malloc(strlen(data) + 1);
+
+	if (new_node->playlist_name == NULL || new_node->data == NULL) {
+		fprintf(stderr, "Memory allocation failed\n");
+		exit(1);
+	}
+
+	// Copy the strings into the new node
+	strcpy(new_node->playlist_name, playlist_name);
 	strcpy(new_node->data, data);
+
 	new_node->next = self->head;
 	self->head = new_node;
 }
 
-// after changing to char*:
-// -- change test in if statement to string compare (strcmp)
-// -- free current->data (memory allocated for string) before freeing current
-void delete_from_list(List* self, String data) {
+// Delete a node with the specified data from the list
+void delete_from_list_hash(List* self, String data) {
 	ListNodePtr current = self->head;
 	ListNodePtr prev = NULL;
 
 	while (current != NULL) {
 		if (strcmp(current->data, data) == 0) {
-			if (prev == NULL) {        // front of list
+			if (prev == NULL) { // Front of the list
 				self->head = current->next;
+				free(current->playlist_name);
 				free(current->data);
 				free(current);
 				current = self->head;
 			}
-			else {                    // middle of list
+			else { // Middle or end of the list
 				prev->next = current->next;
+				free(current->playlist_name);
 				free(current->data);
 				free(current);
 				current = prev->next;
@@ -70,9 +82,10 @@ void delete_from_list(List* self, String data) {
 	}
 }
 
+
 // after changing to char*:
 // -- need to free memory allocated for string before freeing node
-void destroy_list(List* self) {
+void destroy_list_hash(List* self) {
 	ListNodePtr current = self->head;
 	while (current != NULL) {
 		ListNodePtr to_free = current;
