@@ -109,7 +109,7 @@ int hash_count(HashTable* self, String song_name) {
 	return count;
 }
 
-
+/*
 // Custom function to split a string by a delimiter and return the first part
 char* split_string(const char* str, char delimiter) {
 	int length = strlen(str);
@@ -185,6 +185,7 @@ char* hash_most_similar(HashTable* self, String playlist_name) {
 
 	return most_similar;
 }
+*/
 
 void hash_destroy(HashTable* self) {
 	for (int i = 0; i < self->size; i++) {
