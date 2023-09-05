@@ -1,19 +1,18 @@
 // list_wk5.h
 #pragma once
 
-//TODO: change data type to char*
-//Hint: use following typedef to make code clearer
 typedef char* String;
 
 typedef struct listNode {
-	String data;
-	struct listNode* next;
+    String playlist_name;
+    String data;
+    struct listNode* next;
 } *ListNodePtr;
 
-typedef struct list {
-	ListNodePtr head;
-} List;
 
+typedef struct list {
+    ListNodePtr head;
+} List;
 
 List new_list();
 
