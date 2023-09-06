@@ -68,13 +68,13 @@ double calculate_similarity(List* playlist1, List* playlist2) {
 	}
 }
 
-
 void hash_insert(HashTable* self, String playlist_name, String song_name) {
 	// 1. find the list to insert into using hash
 	int hash_index = hash(playlist_name, self->size);
 
 	// 2. call list function to insert into that list
-	insert_at_front_hash(&(self->table[hash_index]), playlist_name, song_name);
+	// insert_at_front_hash(&(self->table[hash_index]), playlist_name, song_name);
+	insert_in_order_hash(&(self->table[hash_index]), playlist_name, song_name);
 }
 
 void hash_remove(HashTable* self, String playlist_name, String song_name) {

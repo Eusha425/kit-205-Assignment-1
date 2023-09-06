@@ -20,7 +20,7 @@ void hash_print(HashTable* self, String playlist_name);
 
 int hash_count(HashTable* self, String song_name);
 
-char* hash_most_similar(HashTable* self, String playlist_name);
+// char* hash_most_similar(HashTable* self, String playlist_name);
 
 double calculate_similarity(List* playlist1, List* playlist2);
 

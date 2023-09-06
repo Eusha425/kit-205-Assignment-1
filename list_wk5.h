@@ -18,6 +18,8 @@ List new_list_hash();
 
 void print_list_hash(List* self);
 
+void insert_in_order_hash(List* self, String playlist_name, String data);
+
 void insert_at_front_hash(List* self, String playlist_name, String data);
 
 // void insert_at_front(List* self, String data);
