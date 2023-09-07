@@ -135,6 +135,7 @@
     <ClCompile Include="main_second.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="avl.h" />
     <ClInclude Include="bst.h" />
     <ClInclude Include="hashtable_wk5.h" />
     <ClInclude Include="list.h" />
