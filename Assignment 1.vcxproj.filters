@@ -36,6 +36,9 @@
     <ClCompile Include="avl.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="list_avl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bst.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="avl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="list_avl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

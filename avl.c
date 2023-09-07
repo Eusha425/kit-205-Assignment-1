@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "avl.h"
 #include <string.h>
-#include "list.h"
+#include "list_avl.h"
 #pragma warning(disable:4996) // to suppress CRT SECURE NO WARNINGS
 
 // create an empty bst

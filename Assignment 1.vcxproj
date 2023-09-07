@@ -131,6 +131,7 @@
     <ClCompile Include="bst.c" />
     <ClCompile Include="hashtable_wk5.c" />
     <ClCompile Include="list.c" />
+    <ClCompile Include="list_avl.c" />
     <ClCompile Include="list_wk5.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="main_second.c" />
@@ -140,6 +141,7 @@
     <ClInclude Include="bst.h" />
     <ClInclude Include="hashtable_wk5.h" />
     <ClInclude Include="list.h" />
+    <ClInclude Include="list_avl.h" />
     <ClInclude Include="list_wk5.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
