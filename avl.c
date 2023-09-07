@@ -31,53 +31,136 @@ AVLNodePtr find_avl(AVL* self, String playlist) {
 	return find_avl_node(self->root, playlist);
 }
 
+// Function to calculate the height of a node
+int node_height(AVLNodePtr node) {
+	if (node == NULL) {
+		return -1;
+	}
+	return node->height;
+}
+
+// Function to calculate the maximum of two integers
+int max_int(int a, int b) {
+	return (a > b) ? a : b;
+}
+
+// Function to perform a left rotation
+AVLNodePtr left_rotate(AVLNodePtr node) {
+	AVLNodePtr new_root = node->right;
+	node->right = new_root->left;
+	new_root->left = node;
+
+	// Update heights
+	node->height = max_int(node_height(node->left), node_height(node->right)) + 1;
+	new_root->height = max_int(node_height(new_root->left), node_height(new_root->right)) + 1;
+
+	return new_root;
+}
+
+// Function to perform a right rotation
+AVLNodePtr right_rotate(AVLNodePtr node) {
+	AVLNodePtr new_root = node->left;
+	node->left = new_root->right;
+	new_root->right = node;
+
+	// Update heights
+	node->height = max_int(node_height(node->left), node_height(node->right)) + 1;
+	new_root->height = max_int(node_height(new_root->left), node_height(new_root->right)) + 1;
+
+	return new_root;
+}
+
+// Function to balance a node if it violates the AVL balance property
+AVLNodePtr balance_node(AVLNodePtr node) {
+	int balance = node_height(node->left) - node_height(node->right);
+
+	// Left heavy
+	if (balance > 1) {
+		// Left-Left (LL) case
+		if (strcmp(node->data_item, node->left->data_item) < 0) {
+			return right_rotate(node);
+		}
+		// Left-Right (LR) case
+		else {
+			node->left = left_rotate(node->left);
+			return right_rotate(node);
+		}
+	}
+	// Right heavy
+	else if (balance < -1) {
+		// Right-Right (RR) case
+		if (strcmp(node->data_item, node->right->data_item) > 0) {
+			return left_rotate(node);
+		}
+		// Right-Left (RL) case
+		else {
+			node->right = right_rotate(node->right);
+			return left_rotate(node);
+		}
+	}
+
+	// No balancing needed
+	return node;
+}
 
 // recursive function to insert a value
-BSTNodePtr insert_bst_node(BSTNodePtr self, String playlist_name, String song_name) {
-	int data_size = strlen(playlist_name) + 1;
+AVLNodePtr insert_avl_node(AVLNodePtr self, String playlist_name, String song_name) {
+	// Perform regular BST insertion
 	if (self == NULL) {
-		self = malloc(sizeof * self);
-		// self->playlist_name = _strdup(playlistName); // Use _strdup here
+		AVLNodePtr new_node = malloc(sizeof * new_node);
+		if (new_node == NULL) {
+			// Handle memory allocation failure if needed
+			return NULL;
+		}
 
-		BSTNodePtr new_node = malloc(sizeof * new_node);
-		new_node->data_item = malloc(sizeof * new_node->data_item * data_size);
+		// Allocate memory for data_item and copy playlist_name
+		new_node->data_item = malloc(strlen(playlist_name) + 1);
+		if (new_node->data_item == NULL) {
+			// Handle memory allocation failure if needed
+			free(new_node);
+			return NULL;
+		}
 		strcpy(new_node->data_item, playlist_name);
-		List list_song = new_list();
-		// insert_at_front(&list_song, song_name);
-		insert_in_order(&list_song, song_name);
-		new_node->song = list_song;
 
-		self = new_node;
+		// Initialize other fields
+		new_node->song = new_list_avl();
+		insert_in_order_avl(&(new_node->song), song_name);
+		new_node->left = NULL;
+		new_node->right = NULL;
+		new_node->height = 0;
+		return new_node;
+	}
 
-		self->left = NULL;
-		self->right = NULL;
-		//self->song_list = new_list();
-	}
-	else if (strcmp(playlist_name, self->data_item) == 0) {
-		// insert_at_front(&self->song, song_name);
-		insert_in_order(&self->song, song_name);
-	}
-	else if (strcmp(playlist_name, self->data_item) < 0) {
-		self->left = insert_bst_node(self->left, playlist_name, song_name);
+	// Recursively insert into the appropriate subtree
+	if (strcmp(playlist_name, self->data_item) < 0) {
+		self->left = insert_avl_node(self->left, playlist_name, song_name);
 	}
 	else if (strcmp(playlist_name, self->data_item) > 0) {
-		self->right = insert_bst_node(self->right, playlist_name, song_name);
+		self->right = insert_avl_node(self->right, playlist_name, song_name);
 	}
-	return self;
+	else {
+		// Playlist already exists, insert the song
+		insert_in_order(&(self->song), song_name);
+		return self;
+	}
+
+	// Update the height of the current node
+	self->height = max_int(node_height(self->left), node_height(self->right)) + 1;
+
+	// Balance the current node
+	return balance_node(self);
 }
 
-// insert a value into the tree
-void insert_bst(BST* self, String playlist, String song) {
-	self->root = insert_bst_node(self->root, playlist, song);
+void insert_avl(AVL* self, String playlist, String song) {
+	self->root = insert_avl_node(self->root, playlist, song);
 }
 
-// helper function for delete
-BSTNodePtr min_node(BSTNodePtr self) {
-	BSTNodePtr current = self;
-	while (current->left != NULL) {
-		current = current->left;
+// Helper function to find the minimum node in a subtree
+AVLNodePtr find_min_node(AVLNodePtr node) {
+	while (node->left != NULL) {
+		node = node->left;
 	}
-	return current;
+	return node;
 }
 
 // recursive function to delete a value
