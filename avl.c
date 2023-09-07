@@ -228,80 +228,38 @@ void delete_avl(AVL* self, String data) {
 	self->root = delete_avl_node(self->root, data);
 }
 
-// recursive function to print in order
-void print_in_order_bst_node(BSTNodePtr self) {
+// Recursive function to print the AVL tree in order
+void print_in_order_avl_node(AVLNodePtr self) {
 	if (self == NULL) {
-		printf("_");
+		return;
 	}
-	else {
-		printf("(");
-		print_in_order_bst_node(self->left);
-		printf(" %s ", self->data_item);
-		print_in_order_bst_node(self->right);
-		printf(")");
-	}
+
+	print_in_order_avl_node(self->left);
+	printf("(%s): ", self->data_item);
+	print_list_avl(&(self->song));
+	print_in_order_avl_node(self->right);
 }
 
-// print the tree in order
-void print_in_order_bst(BST* self) {
-	print_in_order_bst_node(self->root);
+void print_in_order_avl(AVL* self) {
+	print_in_order_avl_node(self->root);
 }
 
 
-/*
-void test_playlist(BSTNodePtr self, String playlist_name)
-{
-	BSTNodePtr find_playlist = find_bst(self, playlist_name);
-	print_list(&(find_playlist));
-}
-*/
-
-int find_height_bst_node(BSTNodePtr self)
-{
-	int max;
-
+// Recursive function to destroy all nodes of the AVL tree
+void destroy_avl_node(AVLNodePtr self) {
 	if (self == NULL) {
-		return -1;
+		return;
 	}
-	else
-	{
-		int left_height = find_height_bst_node(self->left);
 
-		int right_height = find_height_bst_node(self->right);
-
-		if (left_height > right_height)
-		{
-			max = left_height + 1;
-			return max;
-		}
-		else
-		{
-			max = right_height + 1;
-			return max;
-		}
-	}
+	destroy_avl_node(self->left);
+	destroy_avl_node(self->right);
+	free(self->data_item);
+	destroy_list_avl(&(self->song));
+	free(self);
 }
 
-// print height of the tree
-void print_height_bst(BST* self)
-{
-	printf("%d", find_height_bst_node(self->root));
-}
-
-// recursive function to detroy all node
-void destroy_bst_node(BSTNodePtr self) {
-	if (self != NULL) {
-		destroy_bst_node(self->left);
-		self->left = NULL;
-		destroy_bst_node(self->right);
-		self->right = NULL;
-		free(self);
-	}
-}
-
-// destroy the tree
-void destroy_bst(BST* self) {
-	destroy_bst_node(self->root);
+void destroy_avl(AVL* self) {
+	destroy_avl_node(self->root);
 	self->root = NULL;
 }
 
