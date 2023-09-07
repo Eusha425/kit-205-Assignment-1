@@ -32,4 +32,3 @@ int count_playlists_with_song(AVLNodePtr root, String song_name);
 
 double calculate_jaccard_similarity_avl(List* playlist1, List* playlist2);
 
-void avl_test();

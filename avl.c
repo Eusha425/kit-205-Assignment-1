@@ -163,44 +163,69 @@ AVLNodePtr find_min_node(AVLNodePtr node) {
 	return node;
 }
 
-// recursive function to delete a value
-BSTNodePtr delete_bst_node(BSTNodePtr self, String data) {
-	if (self != NULL) {
-		int compareResult = strcmp(data, self->data_item);
-		if (compareResult == 0) { // found item
-			if (self->left != NULL && self->right != NULL) {
-				// two child case
-				BSTNodePtr successor = min_node(self->right);
-				free(self->data_item);
-				strcpy(self->data_item, successor->data_item);
-				//self->data_item = strdup(successor->data_item);
-				self->right = delete_bst_node(self->right, successor->data_item);
+
+// Recursive function to delete a node from an AVL tree
+AVLNodePtr delete_avl_node(AVLNodePtr self, String data) {
+	if (self == NULL) {
+		return self;
+	}
+
+	// Recursively delete from the appropriate subtree
+	if (strcmp(data, self->data_item) < 0) {
+		self->left = delete_avl_node(self->left, data);
+	}
+	else if (strcmp(data, self->data_item) > 0) {
+		self->right = delete_avl_node(self->right, data);
+	}
+	else {
+		// Node with the data to be deleted found
+
+		// Node with only one child or no child
+		if (self->left == NULL || self->right == NULL) {
+			AVLNodePtr temp = self->left ? self->left : self->right;
+
+			// No child case
+			if (temp == NULL) {
+				temp = self;
+				self = NULL;
 			}
-			else { // one or zero child case
-				BSTNodePtr to_free = self;
-				if (self->left) {
-					self = self->left;
-				}
-				else {
-					self = self->right;
-				}
-				free(to_free->data_item);
-				free(to_free);
+			else {
+				// Copy the contents of the non-empty child
+				self->data_item = temp->data_item;
+				self->song = temp->song;
+				self->left = temp->left;
+				self->right = temp->right;
+				self->height = temp->height;
 			}
-		}
-		else if (compareResult < 0) {
-			self->left = delete_bst_node(self->left, data);
+			free(temp);
 		}
 		else {
-			self->right = delete_bst_node(self->right, data);
+			// Node with two children, get the inorder successor
+			AVLNodePtr temp = find_min_node(self->right);
+
+			// Copy the inorder successor's data to this node
+			self->data_item = temp->data_item;
+			self->song = temp->song;
+
+			// Delete the inorder successor
+			self->right = delete_avl_node(self->right, temp->data_item);
 		}
 	}
-	return self;
+
+	if (self == NULL) {
+		return self;
+	}
+
+	// Update the height of the current node
+	self->height = max_int(node_height(self->left), node_height(self->right)) + 1;
+
+	// Balance the current node
+	return balance_node(self);
 }
 
-// delete a value from the tree
-void delete_bst(BST* self, String data) {
-	self->root = delete_bst_node(self->root, data);
+
+void delete_avl(AVL* self, String data) {
+	self->root = delete_avl_node(self->root, data);
 }
 
 // recursive function to print in order
