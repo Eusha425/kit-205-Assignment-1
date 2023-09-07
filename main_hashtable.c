@@ -33,7 +33,7 @@ char* find_most_similar_playlist_hash(HashTable* table, String target_playlist) 
 }
 
 
-int main() {
+int main1() {
     int command = 1;
     HashTable table = create_hashtable(11);
     char buffer[100];

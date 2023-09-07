@@ -1,4 +1,4 @@
-// list_avl.h
+// list.h
 #pragma once
 
 //TODO: change data type to char*

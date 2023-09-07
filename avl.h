@@ -1,6 +1,6 @@
 // avl.h
 #pragma once
-#include "list.h"
+#include "list_avl.h"
 
 // Typedef for AVL tree node
 typedef struct avlNode {
@@ -28,7 +28,8 @@ void print_in_order_avl(AVL* self);
 
 void destroy_avl(AVL* self);
 
-int count_playlists_with_song(AVLNodePtr root, String song_name);
+int count_playlists_with_song_avl(AVLNodePtr root, String song_name);
 
 double calculate_jaccard_similarity_avl(List* playlist1, List* playlist2);
+
 

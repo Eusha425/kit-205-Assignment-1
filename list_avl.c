@@ -1,7 +1,7 @@
 // list.c
 #include <stdio.h>
 #include <stdlib.h>
-#include "list.h"
+#include "list_avl.h"
 #include <string.h>
 #pragma warning(disable:4996) // to suppress CRT SECURE NO WARNINGS
 

@@ -18,7 +18,7 @@
     <ClCompile Include="bst.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.c">
+    <ClCompile Include="main_BST.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="list.c">
@@ -30,13 +30,16 @@
     <ClCompile Include="list_wk5.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main_second.c">
+    <ClCompile Include="main_hashtable.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="avl.c">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="list_avl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main_AVL.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

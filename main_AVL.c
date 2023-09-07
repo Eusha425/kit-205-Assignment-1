@@ -1,15 +1,14 @@
+// main.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "bst.h"   // Include your binary search tree implementation
+#include "avl.h"  // Include your AVL tree implementation
 
-#pragma warning(disable:4996) // to suppress CRT SECURE NO WARNINGS
-//main.c
-
+#pragma warning(disable : 4996)  // to suppress CRT SECURE NO WARNINGS
 
 // Function to find the most similar playlist
-void find_most_similar_playlist(BST* playlist_tree, String target_playlist) {
-    BSTNodePtr target_node = find_bst(playlist_tree, target_playlist);
+void find_most_similar_playlist_avl(AVL* playlist_tree, String target_playlist) {
+    AVLNodePtr target_node = find_avl(playlist_tree, target_playlist);
     if (target_node == NULL) {
         printf("Playlist '%s' not found.\n", target_playlist);
         return;
@@ -18,10 +17,10 @@ void find_most_similar_playlist(BST* playlist_tree, String target_playlist) {
     double max_similarity = -1.0;
     String most_similar_playlist = NULL;
 
-    BSTNodePtr current_node = playlist_tree->root;
+    AVLNodePtr current_node = playlist_tree->root;
     while (current_node != NULL) {
         if (strcmp(current_node->data_item, target_playlist) != 0) {
-            double similarity = calculate_jaccard_similarity(&(current_node->song), &(target_node->song));
+            double similarity = calculate_jaccard_similarity_avl(&(current_node->song), &(target_node->song));
             if (similarity > max_similarity) {
                 max_similarity = similarity;
                 most_similar_playlist = current_node->data_item;
@@ -38,17 +37,16 @@ void find_most_similar_playlist(BST* playlist_tree, String target_playlist) {
     }
 }
 
-
-int main1() {
-
-    BST playlist_tree = new_bst();
+int main() {
+    AVL playlist_tree = new_avl();
 
     int choice;
-    String playlist_buffer[100]; // Initialize with memory for playlist name
-    String song_buffer[100];     // Initialize with memory for song name
+    String playlist_buffer[100];  // Initialize with memory for playlist name
+    String song_buffer[100];      // Initialize with memory for song name
     String target_playlist[100];
 
     do {
+        printf("This is AVL");
         printf("\n1. Add a song to a playlist\n");
         printf("2. Remove a song from a playlist\n");
         printf("3. Print songs in a playlist\n");
@@ -62,63 +60,51 @@ int main1() {
             scanf("%s", playlist_buffer);
             printf("Enter song name: ");
             scanf("%s", song_buffer);
-            insert_bst(&playlist_tree, playlist_buffer, song_buffer);
-            
+            insert_avl(&playlist_tree, playlist_buffer, song_buffer);
             break;
+
         case 2:
-            
             printf("Enter playlist name: ");
             scanf("%s", playlist_buffer);
             printf("Enter song name: ");
             scanf("%s", song_buffer);
 
-            // find the playlist from which the song is to be removed
-            BSTNodePtr find_song_playlist = find_bst(&playlist_tree, playlist_buffer); 
-            delete_from_list(&find_song_playlist->song, song_buffer);
-            
+            // Find the playlist from which the song is to be removed
+            AVLNodePtr find_song_playlist = find_avl(&playlist_tree, playlist_buffer);
+            delete_from_list_avl(&(find_song_playlist->song), song_buffer);
             break;
 
         case 3:
-            
             printf("Enter the playlist name:");
-            scanf("%s", &playlist_buffer);
+            scanf("%s", playlist_buffer);
 
-            // find the playlist which needs to be displayed
-            BSTNodePtr find_playlist = find_bst(&playlist_tree, playlist_buffer);
-            print_list(&(find_playlist->song));
-
+            // Find the playlist which needs to be displayed
+            AVLNodePtr find_playlist = find_avl(&playlist_tree, playlist_buffer);
+            print_list_avl(&(find_playlist->song));
             break;
-        case 4:
 
+        case 4:
             printf("Enter song name: ");
             scanf("%s", song_buffer);
-            int playlistCount = count_playlists_with_song(playlist_tree.root, song_buffer);
+            int playlistCount = count_playlists_with_song_avl(playlist_tree.root, song_buffer);
             printf("The song '%s' appears in %d playlists.\n", song_buffer, playlistCount);
-            
             break;
 
         case 5:
             // Find most similar playlist
-            
             printf("Enter the playlist name for recommendations: ");
             scanf("%s", target_playlist);
-
-            find_most_similar_playlist(&playlist_tree, target_playlist);
+            find_most_similar_playlist_avl(&playlist_tree, target_playlist);
             break;
 
         case 0:
-
-            // Clean up and exit
-            destroy_bst(&playlist_tree);
-            printf("\nExiting...\n");
+            destroy_avl(&playlist_tree);
             break;
 
         default:
             printf("Invalid choice\n");
         }
-        
     } while (choice != 0);
-    
 
     return 0;
 }
