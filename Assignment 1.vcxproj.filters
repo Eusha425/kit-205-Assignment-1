@@ -33,6 +33,9 @@
     <ClCompile Include="main_second.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="avl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bst.h">

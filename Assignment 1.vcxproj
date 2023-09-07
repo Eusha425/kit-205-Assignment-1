@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="avl.c" />
     <ClCompile Include="bst.c" />
     <ClCompile Include="hashtable_wk5.c" />
     <ClCompile Include="list.c" />
