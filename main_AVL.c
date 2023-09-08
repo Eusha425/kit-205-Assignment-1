@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "avl.h"  // Include your AVL tree implementation
+#include <time.h>
 
 #pragma warning(disable : 4996)  // to suppress CRT SECURE NO WARNINGS
 
@@ -39,6 +40,8 @@ void find_most_similar_playlist_avl(AVL* playlist_tree, String target_playlist) 
 
 int main() {
     AVL playlist_tree = new_avl();
+    // Start measuring time
+    clock_t start_time = clock();
 
     int choice;
     String playlist_buffer[100];  // Initialize with memory for playlist name
@@ -104,6 +107,15 @@ int main() {
             printf("Invalid choice\n");
         }
     } while (choice != 0);
+
+    // Stop measuring time
+    clock_t end_time = clock();
+
+    // Calculate the elapsed time in milliseconds
+    double elapsed_time = ((double)(end_time - start_time)) / CLOCKS_PER_SEC * 1000.0;
+
+    // Print the elapsed time
+    printf("Operation took %.2f milliseconds\n", elapsed_time);
 
     return 0;
 }
