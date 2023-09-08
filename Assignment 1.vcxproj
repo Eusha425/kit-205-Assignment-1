@@ -145,6 +145,9 @@
     <ClInclude Include="list_avl.h" />
     <ClInclude Include="list_wk5.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="input_data.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

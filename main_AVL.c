@@ -46,7 +46,6 @@ int main() {
     String target_playlist[100];
 
     do {
-        printf("This is AVL");
         printf("\n1. Add a song to a playlist\n");
         printf("2. Remove a song from a playlist\n");
         printf("3. Print songs in a playlist\n");

@@ -55,8 +55,26 @@ AVLNodePtr left_rotate(AVLNodePtr node) {
     return new_root;
 }
 
-// Function to perform a right rotation
 AVLNodePtr right_rotate(AVLNodePtr node) {
+    if (node == NULL || node->left == NULL) {
+        // Cannot perform right rotation, return the original node
+        return node;
+    }
+
+    AVLNodePtr new_root = node->left;
+    node->left = new_root->right;
+    new_root->right = node;
+
+    // Update heights
+    node->height = max_int(node_height(node->left), node_height(node->right)) + 1;
+    new_root->height = max_int(node_height(new_root->left), node_height(new_root->right)) + 1;
+
+    return new_root;
+}
+
+
+// Function to perform a right rotation
+AVLNodePtr right_rotate1(AVLNodePtr node) {
     AVLNodePtr new_root = node->left;
     node->left = new_root->right;
     new_root->right = node;
