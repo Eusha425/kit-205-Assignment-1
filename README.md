@@ -1,4 +1,4 @@
-# C Playlist Prototype
+# C Playlist Prototype 
 
 This repository contains a C console application that serves as a prototype for a database designed to manage user playlists. The application facilitates operations such as adding and removing songs from playlists, printing playlist contents, determining song popularity, and recommending similar playlists.
 
